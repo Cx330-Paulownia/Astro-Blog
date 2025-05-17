@@ -10,25 +10,25 @@ import { i18n } from "../i18n/translation";
 const friendsPost = await getEntry("spec", "friends");
 
 if (!friendsPost) {
-    throw new Error("Could not find 'friends' entry in 'spec' collection.");
+	throw new Error("Could not find 'friends' entry in 'spec' collection.");
 }
 
 const { Content } = await render(friendsPost);
 const items = [
-    {
-        title: "Astro",
-        imgurl: "https://avatars.githubusercontent.com/u/44914786?s=48&v=4",
-        desc: "The web framework for content-driven websites.",
-        siteurl: "https://github.com/withastro/astro",
-        tags: ["框架"],
-    },
-    {
-        title: "禾守の小站",
-        imgurl: "https://sway-cdn.com/s/wl1r2oqIuZtCtQbJ/images/9ecO8UCSDAkWDf",
-        desc: "这里是一只萌新的博客~",
-        siteurl: "https://blog.dmoe.top",
-        tags: ["博客"],
-    },
+	{
+		title: "Astro",
+		imgurl: "https://avatars.githubusercontent.com/u/44914786?s=48&v=4",
+		desc: "The web framework for content-driven websites.",
+		siteurl: "https://github.com/withastro/astro",
+		tags: ["框架"],
+	},
+	{
+		title: "禾守の小站",
+		imgurl: "https://sway-cdn.com/s/wl1r2oqIuZtCtQbJ/images/9ecO8UCSDAkWDf",
+		desc: "这里是一只萌新的博客~",
+		siteurl: "https://blog.dmoe.top",
+		tags: ["博客"],
+	},
 ];
 ---
 
