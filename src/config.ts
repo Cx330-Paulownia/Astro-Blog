@@ -42,13 +42,8 @@ export const navBarConfig: NavBarConfig = {
 	links: [
 		LinkPreset.Home,
 		LinkPreset.Archive,
-		LinkPreset.About,
 		LinkPreset.Friends,
-		{
-			name: "GitHub",
-			url: "https://github.com/Cx330-Paulownia", // Internal links should not include the base path, as it is automatically added
-			external: true, // Show an external link icon and will open in a new tab
-		},
+		LinkPreset.About,
 	],
 };
 
