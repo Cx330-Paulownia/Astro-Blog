@@ -3,6 +3,7 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
 
 import { getEntry } from "astro:content";
 import { render } from "astro:content";
+import Twikoo from "@components/comment/Twikoo.astro";
 import Markdown from "@components/misc/Markdown.astro";
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
@@ -114,6 +115,7 @@ const items = [
             <Markdown class="mt-2">
                 <Content />
             </Markdown>
+            <div class="card-base p-6 mb-4"><Twikoo path={`/posts/friends`} /></div>
         </div>
     </div>
 </MainGridLayout>

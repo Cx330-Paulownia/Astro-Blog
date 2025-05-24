@@ -1,19 +1,28 @@
 ---
-import { commentConfig } from "@/config";
-
 interface Props {
 	path: string;
 }
 
 const config = {
-	...commentConfig.twikoo,
-	el: "#tcomment",
+	el: "#comment",
 	path: Astro.props.path,
 };
 ---
-
-<div id="tcomment"></div>
-<script is:inline src="https://cdn.jsdelivr.net/npm/twikoo@1.6.43/dist/twikoo.min.js"></script>
-<script is:inline define:vars={{ config }}>
-  twikoo.init(config)
+<div id="comment"></div>
+<script define:vars={{ config }}>
+  function loadTwikoo() {
+    const script = document.createElement("script");
+    script.src =
+      "https://registry.npmmirror.com/twikoo/1.6.43/files/dist/twikoo.min.js";
+    script.defer = true;
+    script.onload = () => {
+      twikoo.init({
+        ...config,
+        envId: "https://ctwikoo.netlify.app/.netlify/functions/twikoo",
+        lang: "zh-CN",
+      });
+    };
+    document.body.appendChild(script);
+  }
+  document.addEventListener("loadComment", loadTwikoo, { once: true });
 </script>
