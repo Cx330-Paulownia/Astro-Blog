@@ -30,4 +30,13 @@ const config = {
     document.body.appendChild(script);
   }
   document.addEventListener("loadComment", loadTwikoo, { once: true });
+  function updateTwikooViews() {
+      if (typeof twikoo !== 'undefined') {
+        twikoo.getVisitCount({
+          url: window.location.pathname,
+          domId: 'twikoo_visitors'
+        }).catch(console.error);
+      }
+    }
+    updateTwikooViews();
 </script>
