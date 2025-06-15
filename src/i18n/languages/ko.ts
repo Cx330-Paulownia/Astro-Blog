@@ -23,6 +23,7 @@ export const ko: Translation = {
 	[Key.minutesCount]: "분",
 	[Key.postCount]: "게시물",
 	[Key.postsCount]: "게시물",
+	[Key.visitorCount]: "방문자 수",
 
 	[Key.themeColor]: "테마 색상",
 
@@ -35,4 +36,5 @@ export const ko: Translation = {
 	[Key.author]: "저자",
 	[Key.publishedAt]: "게시일",
 	[Key.license]: "라이선스",
+	[Key.friends]: "친구들",
 };

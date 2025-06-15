@@ -1,0 +1,33 @@
+---
+import { commentConfig } from "@/config";
+
+interface Props {
+	path: string;
+}
+
+const config = {
+	...commentConfig.twikoo,
+	el: "#tcomment",
+	path: Astro.props.path,
+};
+---
+
+<div id="tcomment"></div>
+<script define:vars={{ config }}>
+  function loadTwikoo() {
+    const script = document.createElement("script");
+    script.src =
+      "https://s4.zstatic.net/npm/twikoo@1.6.44/dist/twikoo.min.js";
+    script.defer = true;
+    script.onload = () => {
+      twikoo.init({
+        ...config,
+        onCommentLoaded: () => {
+          updateTwikooViews();
+        }
+      });
+    };
+    document.body.appendChild(script);
+  }
+  document.addEventListener("loadComment", loadTwikoo, { once: true });
+</script>
