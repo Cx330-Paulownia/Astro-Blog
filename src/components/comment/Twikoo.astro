@@ -14,28 +14,25 @@ const config = {
 
 <div id="tcomment"></div>
 <script define:vars={{ config }}>
-  function updateTwikooStats() {
-    if (typeof twikoo === 'undefined') return;
+  function updateTwikooViews() {
+    function getCommentsCount() {
+      //直接从评论组件
+      const commentCountEl = document.querySelector('.tk-comments-count');
+      if (commentCountEl) {
+        const match = commentCountEl.textContent.match(/\d+/);
+        return match ? match[0] : '0';
+      }
+    }
     
-    const path = getNormalizedPath();
+    document.getElementById('twikoo_comments').textContent = getCommentsCount();
     
     twikoo.getVisitCount({
-      url: path,
+      url: config.path,
       domId: 'twikoo_visitors'
-    }).catch(console.error);
-    
-    twikoo.getCommentsCount({
-      urls: [commentPath],
-      includeReply: false
-    }).then(res => {
-      if (Array.isArray(res) && res.length > 0) {
-        const currentPage = res.find(item => item.url === path);
-        if (currentPage) {
-          const commentsEl = document.getElementById('twikoo_comments');
-          if (commentsEl) commentsEl.textContent = currentPage.count || 0;
-        }
-      }
-    }).catch(console.error);
+    }).catch(error => {
+      console.error('Failed to get visit count:', error);
+      document.getElementById('twikoo_visitors').textContent = '0';
+    });
   }
 
   function loadTwikoo() {
@@ -46,35 +43,14 @@ const config = {
       twikoo.init({
         ...config,
         onCommentLoaded: () => {
-          updateTwikooStats();
+          updateTwikooViews();
         }
       });
       
-      updateTwikooStats();
+      setTimeout(updateTwikooViews, 1000);
     };
     document.body.appendChild(script);
   }
 
   document.addEventListener("loadComment", loadTwikoo, { once: true });
-  
-  const cacheKey = `twikoo_stats_${getNormalizedPath()}`;
-  const cachedStats = sessionStorage.getItem(cacheKey);
-  
-  if (cachedStats) {
-    const { views, comments } = JSON.parse(cachedStats);
-    const visitorsEl = document.getElementById('twikoo_visitors');
-    const commentsEl = document.getElementById('twikoo_comments');
-    
-    if (visitorsEl) visitorsEl.textContent = views;
-    if (commentsEl) commentsEl.textContent = comments;
-  }
-  
-  window.updateTwikooStats = updateTwikooStats;
-  
-  document.addEventListener('astro:after-swap', () => {
-
-    sessionStorage.removeItem(cacheKey);
-    
-    updateTwikooStats();
-  });
 </script>
