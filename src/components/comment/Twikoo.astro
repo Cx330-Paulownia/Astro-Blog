@@ -25,7 +25,7 @@ const config = {
     }).catch(console.error);
     
     twikoo.getCommentsCount({
-      urls: [path],
+      urls: [commentPath],
       includeReply: false
     }).then(res => {
       if (Array.isArray(res) && res.length > 0) {
