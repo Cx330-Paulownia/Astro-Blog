@@ -13,40 +13,68 @@ const config = {
 ---
 
 <div id="tcomment"></div>
-
-<span id="twikoo_comments"></span>
-<span id="twikoo_visitors"></span>
-
 <script define:vars={{ config }}>
-  function updateTwikooViews() {
-    const commentsEl = document.getElementById('twikoo_comments');
-    const visitorsEl = document.getElementById('twikoo_visitors');
-
-    if (commentsEl) {
-      const commentCountEl = document.querySelector('.tk-comments-count');
-      const commentCount = commentCountEl ? 
-        (commentCountEl.textContent.match(/\d+/)?.[0] || '0') : '0';
-      commentsEl.textContent = commentCount;
-    }
-
-    if (visitorsEl) {
-      visitorsEl.textContent = '0';
-    }
+  function updateTwikooStats() {
+    if (typeof twikoo === 'undefined') return;
+    
+    const path = getNormalizedPath();
+    
+    twikoo.getVisitCount({
+      url: path,
+      domId: 'twikoo_visitors'
+    }).catch(console.error);
+    
+    twikoo.getCommentsCount({
+      urls: [path],
+      includeReply: false
+    }).then(res => {
+      if (Array.isArray(res) && res.length > 0) {
+        const currentPage = res.find(item => item.url === path);
+        if (currentPage) {
+          const commentsEl = document.getElementById('twikoo_comments');
+          if (commentsEl) commentsEl.textContent = currentPage.count || 0;
+        }
+      }
+    }).catch(console.error);
   }
 
   function loadTwikoo() {
     const script = document.createElement("script");
-    script.src = "https://cdn.jsdelivr.net/npm/twikoo@1.6.44/dist/twikoo.min.js";
+    script.src = "https://s4.zstatic.net/npm/twikoo@1.6.44/dist/twikoo.min.js";
     script.defer = true;
     script.onload = () => {
       twikoo.init({
         ...config,
         onCommentLoaded: () => {
-          updateTwikooViews();
+          updateTwikooStats();
         }
       });
+      
+      updateTwikooStats();
     };
     document.body.appendChild(script);
   }
+
   document.addEventListener("loadComment", loadTwikoo, { once: true });
+  
+  const cacheKey = `twikoo_stats_${getNormalizedPath()}`;
+  const cachedStats = sessionStorage.getItem(cacheKey);
+  
+  if (cachedStats) {
+    const { views, comments } = JSON.parse(cachedStats);
+    const visitorsEl = document.getElementById('twikoo_visitors');
+    const commentsEl = document.getElementById('twikoo_comments');
+    
+    if (visitorsEl) visitorsEl.textContent = views;
+    if (commentsEl) commentsEl.textContent = comments;
+  }
+  
+  window.updateTwikooStats = updateTwikooStats;
+  
+  document.addEventListener('astro:after-swap', () => {
+
+    sessionStorage.removeItem(cacheKey);
+    
+    updateTwikooStats();
+  });
 </script>
