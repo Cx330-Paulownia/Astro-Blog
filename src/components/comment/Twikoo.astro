@@ -13,6 +13,7 @@ const config = {
 ---
 
 <div id="tcomment"></div>
+
 <span id="twikoo_comments"></span>
 <span id="twikoo_visitors"></span>
 
@@ -39,10 +40,10 @@ const config = {
     script.defer = true;
     script.onload = () => {
       twikoo.init({
-        ...config
-      });
-      twikoo.ready(() => {
-        updateTwikooViews();
+        ...config,
+        onCommentLoaded: () => {
+          updateTwikooViews();
+        }
       });
     };
     document.body.appendChild(script);
