@@ -13,31 +13,30 @@ const config = {
 ---
 
 <div id="tcomment"></div>
+
+<span id="twikoo_comments"></span>
+<span id="twikoo_visitors"></span>
+
 <script define:vars={{ config }}>
   function updateTwikooViews() {
-    function getCommentsCount() {
-      //直接从评论组件
+    const commentsEl = document.getElementById('twikoo_comments');
+    const visitorsEl = document.getElementById('twikoo_visitors');
+
+    if (commentsEl) {
       const commentCountEl = document.querySelector('.tk-comments-count');
-      if (commentCountEl) {
-        const match = commentCountEl.textContent.match(/\d+/);
-        return match ? match[0] : '0';
-      }
+      const commentCount = commentCountEl ? 
+        (commentCountEl.textContent.match(/\d+/)?.[0] || '0') : '0';
+      commentsEl.textContent = commentCount;
     }
-    
-    document.getElementById('twikoo_comments').textContent = getCommentsCount();
-    
-    twikoo.getVisitCount({
-      url: config.path,
-      domId: 'twikoo_visitors'
-    }).catch(error => {
-      console.error('Failed to get visit count:', error);
-      document.getElementById('twikoo_visitors').textContent = '0';
-    });
+
+    if (visitorsEl) {
+      visitorsEl.textContent = '0';
+    }
   }
 
   function loadTwikoo() {
     const script = document.createElement("script");
-    script.src = "https://s4.zstatic.net/npm/twikoo@1.6.44/dist/twikoo.min.js";
+    script.src = "https://cdn.jsdelivr.net/npm/twikoo@1.6.44/dist/twikoo.min.js";
     script.defer = true;
     script.onload = () => {
       twikoo.init({
@@ -46,11 +45,9 @@ const config = {
           updateTwikooViews();
         }
       });
-      
       setTimeout(updateTwikooViews, 1000);
     };
     document.body.appendChild(script);
   }
-
   document.addEventListener("loadComment", loadTwikoo, { once: true });
 </script>
