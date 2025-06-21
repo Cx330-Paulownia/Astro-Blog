@@ -25,6 +25,7 @@ export const en: Translation = {
 	[Key.postsCount]: "posts",
 	[Key.visitorCount]: "visitor",
 	[Key.commentsCount]: "comments",
+	[Key.series]: "Series",
 
 	[Key.themeColor]: "Theme Color",
 

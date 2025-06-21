@@ -15,25 +15,24 @@ const config = {
 <div id="tcomment"></div>
 <script define:vars={{ config }}>
   function updateTwikooViews() {
-    function getCommentsCount() {
-      const commentCountEl = document.querySelector('.tk-comments-count');
-      if (commentCountEl) {
-        const match = commentCountEl.textContent.match(/\d+/);
-        return match ? match[0] : '0';
+    // 使用官方API获取评论数
+    twikoo.getCommentsCount({
+      envId: config.envId, // 从配置中获取环境ID
+      region: config.region, // 从配置中获取地域（如果有）
+      urls: [config.path], // 当前页面路径
+      includeReply: false // 不包括回复
+    }).then(res => {
+      if (res && res.length > 0) {
+        const commentCount = res[0].count;
+        document.getElementById('twikoo_comments').textContent = commentCount;
       }
-    }
-    
-    document.getElementById('twikoo_comments').textContent = getCommentsCount();
-    
-    twikoo.getVisitCount({
-      url: config.path,
-      domId: 'twikoo_visitors'
-    }).catch(error => {
-      console.error('Failed to get visit count:', error);
-      document.getElementById('twikoo_visitors').textContent = '0';
+    }).catch(err => {
+      console.error('Failed to get comments count:', err);
+      document.getElementById('twikoo_comments').textContent = '0';
     });
   }
-
+  
+  // 加载 Twikoo 脚本
   function loadTwikoo() {
     const script = document.createElement("script");
     script.src = "https://s4.zstatic.net/npm/twikoo@1.6.44/dist/twikoo.min.js";
