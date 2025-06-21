@@ -15,7 +15,6 @@ const config = {
 <div id="tcomment"></div>
 <script define:vars={{ config }}>
   function updateTwikooViews() {
-    // 使用官方API获取评论数
     twikoo.getCommentsCount({
       envId: config.envId, // 从配置中获取环境ID
       region: config.region, // 从配置中获取地域（如果有）
@@ -32,7 +31,7 @@ const config = {
     });
   }
   
-  // 加载 Twikoo 脚本
+  // 加载 Twikoo
   function loadTwikoo() {
     const script = document.createElement("script");
     script.src = "https://s4.zstatic.net/npm/twikoo@1.6.44/dist/twikoo.min.js";
@@ -47,5 +46,5 @@ const config = {
     };
     document.body.appendChild(script);
   }
-  document.addEventListener("loadComment", loadTwikoo, { once: true });
+  document.addEventListener("loadComment", loadTwikoo, { once: true }); // 确保只加载一次
 </script>
