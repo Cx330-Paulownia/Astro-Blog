@@ -15,23 +15,23 @@ const config = {
 <div id="tcomment"></div>
 <script define:vars={{ config }}>
   function updateTwikooViews() {
-    twikoo.getCommentsCount({
-      envId: config.envId, // 从配置中获取环境ID
-      region: config.region, // 从配置中获取地域（如果有）
-      urls: [config.path], // 当前页面路径
-      includeReply: false // 不包括回复
-    }).then(res => {
-      if (res && res.length > 0) {
-        const commentCount = res[0].count;
-        document.getElementById('twikoo_comments').textContent = commentCount;
-      }
-    }).catch(err => {
-      console.error('Failed to get comments count:', err);
-      document.getElementById('twikoo_comments').textContent = '0';
-    });
+    // 获取评论数
+    const commentsEl = document.getElementById('twikoo_comments');
+    if (commentsEl) {
+      twikoo.getCommentsCount({
+        envId: config.envId,
+        region: config.region,
+        urls: [config.path],
+        includeReply: false
+      }).then(res => {
+        commentsEl.textContent = res?.[0]?.count ?? '0';
+      }).catch(err => {
+        console.error('Failed to get comments count:', err);
+        commentsEl.textContent = '0';
+      });
+    }
   }
   
-  // 加载 Twikoo
   function loadTwikoo() {
     const script = document.createElement("script");
     script.src = "https://s4.zstatic.net/npm/twikoo@1.6.44/dist/twikoo.min.js";
@@ -46,5 +46,6 @@ const config = {
     };
     document.body.appendChild(script);
   }
-  document.addEventListener("loadComment", loadTwikoo, { once: true }); // 确保只加载一次
+  
+  document.addEventListener("loadComment", loadTwikoo, { once: true });
 </script>

@@ -149,6 +149,7 @@ const jsonLd = {
             function runtime() {
                 // 从隐藏元素获取日期
                 const lastModifiedElement = document.getElementById('last-modified');
+                    if (!lastModifiedElement) return;
                 const startDate = new Date(lastModifiedElement.dataset.lastModified);
                 const currentDate = new Date();
                 const diff = currentDate - startDate;
@@ -193,6 +194,7 @@ const jsonLd = {
             }
             setInterval(runtime, 1000);
         </script>
+        
         <div class="card-base p-1 mb-0.1">
             <script is:inline></script>
             <div class="flex items-center gap-2">
