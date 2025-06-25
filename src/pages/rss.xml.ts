@@ -1,3 +1,4 @@
+
 import { siteConfig } from "@/config";
 import rss from "@astrojs/rss";
 import { getSortedPosts } from "@utils/content-utils";
@@ -19,6 +20,7 @@ export async function GET(context: APIContext) {
 	const blog = await getSortedPosts();
 
 	return rss({
+		stylesheet: "/rss.xsl", // 确保启用XSLT
 		title: siteConfig.title,
 		description: siteConfig.subtitle || "No description",
 		site: context.site ?? "https://fuwari.vercel.app",
@@ -34,6 +36,7 @@ export async function GET(context: APIContext) {
 				content: sanitizeHtml(parser.render(cleanedContent), {
 					allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
 				}),
+				categories: post.data.tags ?? [],
 			};
 		}),
 		customData: `<language>${siteConfig.lang}</language>`,
