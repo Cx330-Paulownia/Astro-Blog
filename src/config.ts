@@ -17,7 +17,7 @@ export const siteConfig: SiteConfig = {
 	},
 	banner: {
 		enable: true,
-		src: "assets/images/demo-banner.webp", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+		src: "https://sway.cloud.microsoft/s/oXulfle6Rt1uSPht/images/7QPCAzf1XetCHe", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 		position: "center", // Equivalent to object-position, only supports 'top', 'center', 'bottom'. 'center' by default
 		credit: {
 			enable: true, // Display the credit text of the banner image
@@ -50,7 +50,8 @@ export const navBarConfig: NavBarConfig = {
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "assets/images/demo-avatar.webp", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+	avatar:
+		"https://sway.cloud.microsoft/s/oXulfle6Rt1uSPht/images/xgUduCQpbR8-Bl", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 	name: "泡桐",
 	bio: "即使一切皆为虚无，也要与他抗争到底.",
 	links: [
@@ -65,6 +66,11 @@ export const profileConfig: ProfileConfig = {
 			name: "GitHub",
 			icon: "fa6-brands:github",
 			url: "https://github.com/Cx330-Paulownia",
+		},
+		{
+			name: "bilibili",
+			icon: "fa6-brands:bilibili",
+			url: "https://space.bilibili.com/3493088685198058",
 		},
 	],
 };
