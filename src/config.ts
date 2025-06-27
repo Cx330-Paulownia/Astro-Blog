@@ -17,7 +17,7 @@ export const siteConfig: SiteConfig = {
 	},
 	banner: {
 		enable: true,
-		src: "https://sway.cloud.microsoft/s/oXulfle6Rt1uSPht/images/7QPCAzf1XetCHe", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+		src: "assets/images/demo-banner.avif", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 		position: "center", // Equivalent to object-position, only supports 'top', 'center', 'bottom'. 'center' by default
 		credit: {
 			enable: true, // Display the credit text of the banner image
