@@ -10,12 +10,6 @@ html.dark {
   @apply text-[var(--tk-text)];
 }
 
-.tk-submit {
-  .tk-avatar {
-    @apply hidden;
-  }
-}
-
 /* Text Area */
 .tk-row {
   .tk-col {
