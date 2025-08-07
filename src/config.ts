@@ -83,6 +83,6 @@ export const licenseConfig: LicenseConfig = {
 
 export const commentConfig: CommentConfig = {
 	twikoo: {
-		envId: "https://cx330.netlify.app/.netlify/functions/twikoo",
+		envId: "https://ctwikoo.netlify.app/.netlify/functions/twikoo",
 	},
 };
